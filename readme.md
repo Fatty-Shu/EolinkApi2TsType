@@ -32,5 +32,5 @@
  - 解析发生的错误，可点击最下方的显示原始数据，然后复制，发送到作者邮箱(q473658336@163.com)或者提issue进行反馈。
  - 如果有任何建议，也可使用上述方式反馈； 
 ### 最后
-欢迎关注我的公众号进行交流。
-![公众号](https://gitee.com/FattyShu/eolink-api-2-ts-type/raw/master/images/weixing.png)
+欢迎关注我的公众号进行交流。  
+![公众号](https://gitee.com/FattyShu/eolink-api-2-ts-type/raw/master/images/communicate.png)
