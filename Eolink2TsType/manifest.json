@@ -1,0 +1,27 @@
+{
+  "manifest_version": 3,
+  "name": "EolinkApi2TsType",
+  "description": "more friendly transform eolink api document request and response body to ts type.",
+  "version": "1.0",
+  "devtools_page": "./devtools/devtools.html",
+  "icons": {
+    "16": "images/icon_16.png",  
+    "24": "images/icon_32.png",   
+    "32": "images/icon_32.png",    
+    "48": "images/icon_64.png",   
+    "64": "images/icon_64.png",  
+    "128": "images/icon_128.png"
+  },
+  "action": {
+    "default_icon": {             
+      "16": "images/icon_16.png",  
+      "24": "images/icon_32.png",   
+      "32": "images/icon_32.png",    
+      "48": "images/icon_64.png",   
+      "64": "images/icon_64.png",  
+      "128": "images/icon_128.png"
+    },
+    "default_title": "EolinkApi2TsType",
+    "default_popup": "./popup/popup.html"
+  }
+}
