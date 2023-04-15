@@ -33,4 +33,4 @@
  - 如果有任何建议，也可使用上述方式反馈； 
 ### 最后
 欢迎关注我的公众号进行交流。  
-![公众号](https://gitee.com/FattyShu/eolink-api-2-ts-type/raw/master/images/communicate.png)
+![communicate.png](https://note.youdao.com/yws/api/personal/file/WEB3b96590e70726ee84723bb9e5c7920af?method=download&shareKey=b789853015cf159143b6250e24bc49fd)
