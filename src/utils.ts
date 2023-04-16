@@ -86,26 +86,6 @@ export function setStorageItem(name: string, data: Record<string, any>): void {
   localStorage.setItem(name, JSON.stringify(data));
 }
 
-interface Option {
-  value: string | number;
-  label: string;
-  children?: Option[];
-}
-
-export function paramList2Option(list: UnionParamItem[], parentKey?: string): Option[] {
-  let arr = [];
-  list.forEach(item => {
-    const value = parentKey ? (`${parentKey}-${item.paramKey}`) : item.paramKey;
-    let arrItem: Option = { label: item.paramKey, value };
-    if (item?.childList && item.childList?.length) {
-      arrItem.children = paramList2Option(item.childList, value);
-    }
-    arr.push(arrItem)
-  })
-  return arr;
-}
-
-
 
 /**
  * 用于递归查找出属性数不为1的子接口，并返回接口名称

@@ -60,7 +60,7 @@ function App() {
             />
             <TabContent apiData={apiObj[activeKey]} key={activeKey} />
           </div>
-          : <Empty style={{ margin: '12px' }} description={'请打开Eolink网页页面，点击接口，接口页面加载完毕后将自动解析。'} />
+          : <Empty style={{ margin: '12px' }} description={'请打开Eolink网页页面，点击接口(如已打开，刷新当前Eolink页面即可)，接口页面加载完毕后将自动解析。'} />
       }
     </>
   );

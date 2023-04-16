@@ -1,6 +1,6 @@
 import type { ApiDataType, ParamItem, UnionParamItem } from './model';
 import { useState, useRef } from 'react';
-import { structureCopy, paramsListRecursion, defaultNameFun } from './utils';
+import { structureCopy, paramsListRecursion } from './utils';
 import { Card, Tabs, Button, Space, Cascader } from 'antd';
 import { useParamsFilterHooks } from './hooks/params-filter';
 import ParamsCollapse from './components/params-collapse';

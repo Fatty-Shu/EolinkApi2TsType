@@ -12,17 +12,17 @@ function getFormDataAttrVal(request, key = 'apiID') {
 chrome.devtools.panels.create("EolinkApi2TsType",
   "",
   "/devtools/panel.html",
-  function(panel) {
-    panel.onShown.addListener((win)=>{
+  function (panel) {
+    panel.onShown.addListener((win) => {
       win.postMessage('init', '*');
 
       chrome.devtools.network.onRequestFinished.addListener(
-        function(req) {
+        function (req) {
           if (req.request.method === 'OPTIONS') return false;
-          if (/\/api\/apiManagementPro\/Api\/getApi$/.test(req.request.url)){
-            
-            req.getContent((body)=>{
-              let data = {isEolinkData: true,apiData:{}}
+          if (/\/api\/apiManagementPro\/Api\/getApi$/.test(req.request.url)) {
+
+            req.getContent((body) => {
+              let data = { isEolinkData: true, apiData: {} }
               data.apiData[getFormDataAttrVal(req.request)] = JSON.parse(body)
               win.postMessage(data, '*');
             })
