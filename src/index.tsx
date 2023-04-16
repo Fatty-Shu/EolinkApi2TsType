@@ -6,9 +6,6 @@ import { Tabs, Empty } from 'antd';
 import { TabContent } from './tab-content';
 import 'antd/dist/reset.css';
 
-
-// TODO: 需要考虑出参最外层是数组的情况
-
 interface State {
   activeKey: string;
   apiObj: { [key: string]: ApiDataType };

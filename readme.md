@@ -123,6 +123,8 @@ window.postMessage({
    - 执行`npx webpack`进行打开
    - 在`chrome`中按照[安装插件](https://gitee.com/FattyShu/eolink-api-2-ts-type/tree/39a91a30fed2710163e616892a39995fe527609a/#%E4%B8%80-%E5%AE%89%E8%A3%85%E6%8F%92%E4%BB%B6)步骤进行插件添加。如已安装关闭再打开一次开发者工具后，插件就会更新。  
 
+5. 关于接口返回的数据结构，可查看`src/model`声明的`ApiData`类型
+
 ##### 项目目录说明
 ```
 // 项目目录文件简单说明

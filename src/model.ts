@@ -48,6 +48,7 @@ interface BaseInfo {
   apiName: string;
   apiURI: string;
   apiRequestType: RequestTypeVals;
+  apiRequestParamJsonType: 0 | 1; // body请求参数外层JSON类型，0 Object 1 Array;
 }
 interface ApiInfo {
   baseInfo: BaseInfo;
@@ -55,7 +56,8 @@ interface ApiInfo {
   requestInfo: UnionParamItem[];
   urlParam: UnionParamItem[];
   restfulParam: UnionParamItem[];
-  resultInfo: { isDefault: 0 | 1, responseCode: number, responseName: string, paramList: UnionParamItem[], responseID: number }[]
+  resultInfo: { isDefault: 0 | 1, responseCode: number, responseName: string, paramList: UnionParamItem[], responseID: number }[];
+  resultParamJsonType:  0 | 1; // 返回参数外层JSON类型，0 Object 1 Array;
 }
 export interface ApiDataType {
   apiInfo: ApiInfo

@@ -54,7 +54,7 @@ type DivRef = React.MutableRefObject<HTMLDivElement>
 type ParamsCollapseType = React.ForwardRefRenderFunction<HTMLDivElement, Props>;
 const ApiFunctionCollapse: ParamsCollapseType = (props, parentRef) => {
   const {
-    apiData: { apiInfo: { baseInfo } },
+    apiData: { apiInfo: { baseInfo, resultParamJsonType } },
     bodyInfos: [bodyInterfaceName, bodyFilterParams],
     resultInfos: [resultInterfaceName, resultFilterParams],
     queryInfos: [queryInterfaceName, queryFilterParams],
@@ -84,11 +84,21 @@ const ApiFunctionCollapse: ParamsCollapseType = (props, parentRef) => {
 
 
   const getResultType = (): string => {
+    // 最外层是数组的情况下，接口名和类型尾要带上“[]”
+    let arrSymbol = resultParamJsonType === 1 ? '[]' : '';
     if (onlyInsertResultType) {
       const { paramType } = resultFilterParams[0];
       return ParamTypeMap[paramType] + (paramType === '12' ? '[]' : '')
     }
-    return insertResultChecked ? getInsertParamsString(resultFilterParams) : resultInterfaceName;
+    let name = insertResultChecked ? getInsertParamsString(resultFilterParams) : resultInterfaceName;
+    return name + arrSymbol;
+  }
+
+  const getParamsType = (): string => {
+    // 最外层是数组的情况下，接口名和类型尾要带上“[]”
+    let arrSymbol = baseInfo.apiRequestParamJsonType === 1 ? '[]' : '';
+    let name = insertBodyChecked ? getInsertParamsString(bodyFilterParams) : bodyInterfaceName
+    return name + arrSymbol;
   }
 
   return (
@@ -149,7 +159,7 @@ const ApiFunctionCollapse: ParamsCollapseType = (props, parentRef) => {
                   url: isRestfulMode ? baseInfo.apiURI.replace(/\{/g, '${') : baseInfo.apiURI,
                   restfulParams: getRestfulParamsString(restfulParams),
                   queryParams: insertQueryChecked ? getInsertParamsString(queryFilterParams) : queryInterfaceName,
-                  params: insertBodyChecked ? getInsertParamsString(bodyFilterParams) : bodyInterfaceName,
+                  params: getParamsType(),
                   resultType: getResultType(),
                   method: RequestTypeMap[String(baseInfo.apiRequestType)].toLocaleLowerCase(),
                   functionName: defaultNameFun(baseInfo.apiURI, baseInfo),
