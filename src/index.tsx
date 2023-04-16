@@ -8,25 +8,26 @@ import 'antd/dist/reset.css';
 
 
 // TODO: 需要考虑出参最外层是数组的情况
-// TODO: 保持接口标签插入的顺序
 
 interface State {
   activeKey: string;
   apiObj: { [key: string]: ApiDataType };
+  keys: string[];
 }
 
 let updateState;
 let scopeState: State = {
   activeKey: '',
-  apiObj: {}
+  apiObj: {},
+  keys: [],
 };
 function App() {
   const [state, setState] = useState<State>({
     activeKey: '',
-    apiObj: {}
+    apiObj: {},
+    keys: [],
   });
-  const { apiObj, activeKey } = state;
-  const keys = Object.keys(apiObj);
+  const { apiObj, activeKey, keys } = state;
   updateState = setState.bind(this);
   scopeState = state;
 
@@ -35,7 +36,8 @@ function App() {
     delete newApiObj[targetKey];
     setState({
       apiObj: newApiObj,
-      activeKey: activeKey === targetKey ? Object.keys(newApiObj)?.[0] : activeKey
+      activeKey: activeKey === targetKey ? Object.keys(newApiObj)?.[0] : activeKey,
+      keys: keys.splice(keys.findIndex(key => key === targetKey), 1)
     })
   }
 
@@ -48,7 +50,7 @@ function App() {
               hideAdd={true}
               type="editable-card"
               activeKey={activeKey}
-              onChange={(activeKey) => setState({ apiObj, activeKey })}
+              onChange={(activeKey) => setState({ apiObj, activeKey, keys })}
               onEdit={remove}
               items={keys.map((key) => {
                 return {
@@ -78,6 +80,7 @@ window.addEventListener('message', (event) => {
   }
 
   if (!event.data) return false;
-  let keys = Object.keys(event.data?.apiData || {})
+  const keys = Object.keys(event.data?.apiData || {})
+  scopeState.keys.push(...keys);
   updateState && updateState({ ...scopeState, activeKey: keys[0], apiObj: { ...scopeState.apiObj, ...event.data?.apiData } })
 })
