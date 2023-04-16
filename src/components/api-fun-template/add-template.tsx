@@ -17,6 +17,7 @@ export const defaultTemplate = `export function [functionName](data: [params]) {
 const TextareaPlaceholder = `模板是一个带占位符的字符串，点位符会替换为相应的内容。点位符号如下：
   [functionName]  方法名称(通过方法名生成函数控制)；
   [restfulParams] restful接口入参；
+  [queryParams]   接口URl入参
   [params]        body入参接口名称或类型字符串；
   [method]        接口请求方法(默认小写)；
   [url]           接口路径
