@@ -43,6 +43,7 @@ export function structureCopy(elements: HTMLElement[]) {
 interface TemplateData {
   functionName: string;
   restfulParams: string;
+  queryParams: string;
   params: string;
   method: string;
   url: string;
@@ -56,6 +57,7 @@ export function replaceFunTemplate(templateData: TemplateData, templateStr: stri
   let funStr = templateStr;
   funStr = funStr.replace(/\[functionName\]/g, templateData.functionName);
   funStr = funStr.replace(/\[restfulParams\]/g, templateData.restfulParams || '');
+  funStr = funStr.replace(/\[queryParams\]/g, templateData.queryParams || '');
   funStr = funStr.replace(/\[params\]/g, templateData.params || '');
   funStr = funStr.replace(/\[method\]/g, templateData.method);
   funStr = funStr.replace(/\[url\]/g, templateData.url);

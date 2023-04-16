@@ -47,6 +47,7 @@ interface Props {
   apiData: ApiDataType
   bodyInfos: [string, ParamItem[]];
   resultInfos: [string, ParamItem[]];
+  queryInfos: [string, ParamItem[]];
   restfulParams: ParamItem[];
 }
 type DivRef = React.MutableRefObject<HTMLDivElement>
@@ -56,6 +57,7 @@ const ApiFunctionCollapse: ParamsCollapseType = (props, parentRef) => {
     apiData: { apiInfo: { baseInfo } },
     bodyInfos: [bodyInterfaceName, bodyFilterParams],
     resultInfos: [resultInterfaceName, resultFilterParams],
+    queryInfos: [queryInterfaceName, queryFilterParams],
     restfulParams,
   } = props;
   const [openFunTempModal, setFunTempModal] = useState(false);
@@ -74,18 +76,19 @@ const ApiFunctionCollapse: ParamsCollapseType = (props, parentRef) => {
   const FunTempListKeyMap: { [PropName: number]: TableDataType } = {};
   FunTempList.map(item => FunTempListKeyMap[item.key] = item);
 
-  const [interBodyChecked, setInterBodyChecked] = useState(false);
-  const [interResultChecked, setInterResultChecked] = useState(false);
-  const [onlyInterResultType, setOnlyInterResultType] = useState(false);
+  const [insertBodyChecked, setInsertBodyChecked] = useState(false);
+  const [insertResultChecked, setInsertResultChecked] = useState(false);
+  const [onlyInsertResultType, setOnlyInsertResultType] = useState(false);
   const [isRestfulMode, setIsRestfulMode] = useState(Boolean(restfulParams.length))
+  const [insertQueryChecked, setInsertQueryChecked] = useState(queryFilterParams.length <= 3);
 
 
   const getResultType = (): string => {
-    if (onlyInterResultType) {
+    if (onlyInsertResultType) {
       const { paramType } = resultFilterParams[0];
       return ParamTypeMap[paramType] + (paramType === '12' ? '[]' : '')
     }
-    return interResultChecked ? getInsertParamsString(resultFilterParams) : resultInterfaceName;
+    return insertResultChecked ? getInsertParamsString(resultFilterParams) : resultInterfaceName;
   }
 
   return (
@@ -110,10 +113,13 @@ const ApiFunctionCollapse: ParamsCollapseType = (props, parentRef) => {
                 options={FunTempList.map((item) => ({ value: item.key, label: item.name }))}
               />
             </Space>
-            <Checkbox checked={interBodyChecked} onChange={() => setInterBodyChecked(!interBodyChecked)}>
+            <Checkbox checked={insertQueryChecked} onChange={() => setInsertQueryChecked(!insertQueryChecked)}>
+              将query参数直接插入模板
+            </Checkbox>
+            <Checkbox checked={insertBodyChecked} onChange={() => setInsertBodyChecked(!insertBodyChecked)}>
               将body参数直接插入模板
             </Checkbox>
-            <Checkbox checked={interResultChecked} onChange={() => setInterResultChecked(!interResultChecked)}>
+            <Checkbox checked={insertResultChecked} onChange={() => setInsertResultChecked(!insertResultChecked)}>
               将返回参数直接插入模板
             </Checkbox>
             {
@@ -121,8 +127,8 @@ const ApiFunctionCollapse: ParamsCollapseType = (props, parentRef) => {
                 <Tooltip
                   title="当且仅当返回参数个数和深度都为1时可用！">
                   <Checkbox
-                    checked={onlyInterResultType}
-                    onChange={() => setOnlyInterResultType(!onlyInterResultType)}>
+                    checked={onlyInsertResultType}
+                    onChange={() => setOnlyInsertResultType(!onlyInsertResultType)}>
                     直接插入返回参数类型
                   </Checkbox>
                 </Tooltip>
@@ -142,7 +148,8 @@ const ApiFunctionCollapse: ParamsCollapseType = (props, parentRef) => {
                 replaceFunTemplate({
                   url: isRestfulMode ? baseInfo.apiURI.replace(/\{/g, '${') : baseInfo.apiURI,
                   restfulParams: getRestfulParamsString(restfulParams),
-                  params: interBodyChecked ? getInsertParamsString(bodyFilterParams) : bodyInterfaceName,
+                  queryParams: insertQueryChecked ? getInsertParamsString(queryFilterParams) : queryInterfaceName,
+                  params: insertBodyChecked ? getInsertParamsString(bodyFilterParams) : bodyInterfaceName,
                   resultType: getResultType(),
                   method: RequestTypeMap[String(baseInfo.apiRequestType)].toLocaleLowerCase(),
                   functionName: defaultNameFun(baseInfo.apiURI, baseInfo),
