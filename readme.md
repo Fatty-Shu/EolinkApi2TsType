@@ -11,7 +11,7 @@
  - 浏览至代码所在的目录，选择目录下的“Eolink2TsType”，点击“选择文件夹”按钮(显示如下插件，并且没有提示错误，表示插件加载成功)。 
     - ![加载成功](https://gitee.com/FattyShu/eolink-api-2-ts-type/raw/master/images/readme4.png)
 
-#### (一) 使用插件(只需两步)
+#### (二) 使用(只需两步)
 1. 打开“开发者工具”(F12)，找到并打开“Eolink2TsType”工具面板
     - ![打开EolinkApi2Typescript](https://gitee.com/FattyShu/eolink-api-2-ts-type/raw/master/public/images/popup1.png)
 2. 打开Eolink网页页面，点击你要查看了Eolink接口，Eolink接口页面加载完成后将自动解析。
@@ -45,6 +45,9 @@
 1. 请求参数和出参，支持解析指定属性(公共属性通过接口继承时或者泛型统一时，可以不解析公共参数)。
 2. 在请求参入或出参模式的，解析属性下拉框，可选择解析指定属性。  
 
+#### (三) 将请求参数或返回参数直接插入模板
+> 调用方法生成，当请求参数或返回参数个数较少时，一般不需要单独声明接口进行类型声明，可勾选相应选项，将参数直接插入模板。
+![将参数直接插入模板](https://gitee.com/FattyShu/eolink-api-2-ts-type/raw/master/images/03.png) 
 
 
 
