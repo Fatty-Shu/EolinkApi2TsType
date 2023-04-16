@@ -34,10 +34,11 @@ function App() {
   const remove = (targetKey) => {
     const newApiObj = apiObj;
     delete newApiObj[targetKey];
+    keys.splice(keys.findIndex(key => key === targetKey), 1);
     setState({
       apiObj: newApiObj,
       activeKey: activeKey === targetKey ? Object.keys(newApiObj)?.[0] : activeKey,
-      keys: keys.splice(keys.findIndex(key => key === targetKey), 1)
+      keys
     })
   }
 
