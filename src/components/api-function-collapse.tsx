@@ -10,28 +10,37 @@ const { Panel } = Collapse;
 
 
 // 行
-const lineParamString = (param: ParamItem, subType?: string) => {
+interface LineParamStrOpts {
+  param: ParamItem;
+  subType?: string;
+  indent: string;
+}
+const lineParamString = ({ param, subType, indent }: LineParamStrOpts) => {
   const { paramNotNull, paramName, paramKey, paramType } = param;
   const optionalSymbol = (paramNotNull === '1') ? '?' : '';
-  const commentStr = paramName ? ('\b//\b' + paramName) : '';
+  const commentStr = paramName ? (`  //  ` + paramName) : '';
 
-  return `\b\b${paramKey}${optionalSymbol}:${subType ? subType : ParamTypeMap[paramType]}${commentStr}\n`
+  return `${indent}${paramKey}${optionalSymbol}:${subType ? subType : ParamTypeMap[paramType]};${commentStr}\n`
 }
 
 // 获取直接插入模板的参数字符串
-const getInsertParamsString = (params: ParamItem[]): string => {
+const getInsertParamsString = (params: ParamItem[], indent: string = ''): string => {
   let str = '{\n'
   try {
     params.forEach((param) => {
       if (InterfaceType[param.paramType] && param.childList?.length) {
-        return str += lineParamString(param, getInsertParamsString(param.childList) + (param.paramType === '12' ? '[]' : '') + ';');
+        return str += lineParamString({
+          param,
+          subType: getInsertParamsString(param.childList, indent + `  `) + (param.paramType === '12' ? '[]' : '') + ';',
+          indent: indent + `  `
+        });
       }
-      str += lineParamString(param);
+      str += lineParamString({ param, indent: indent + `  ` });
     })
   } catch (err) {
     console.log('参数解析发生错误', err)
   }
-  str += '}'
+  str += `${indent}}`
 
   return str;
 }
@@ -123,12 +132,20 @@ const ApiFunctionCollapse: ParamsCollapseType = (props, parentRef) => {
                 options={FunTempList.map((item) => ({ value: item.key, label: item.name }))}
               />
             </Space>
-            <Checkbox checked={insertQueryChecked} onChange={() => setInsertQueryChecked(!insertQueryChecked)}>
-              将query参数直接插入模板
-            </Checkbox>
-            <Checkbox checked={insertBodyChecked} onChange={() => setInsertBodyChecked(!insertBodyChecked)}>
-              将body参数直接插入模板
-            </Checkbox>
+            {
+              queryFilterParams.length ?
+                <Checkbox checked={insertQueryChecked} onChange={() => setInsertQueryChecked(!insertQueryChecked)}>
+                  将query参数直接插入模板
+                </Checkbox>
+                : ''
+            }
+            {
+              bodyFilterParams.length ?
+                <Checkbox checked={insertBodyChecked} onChange={() => setInsertBodyChecked(!insertBodyChecked)}>
+                  将body参数直接插入模板
+                </Checkbox>
+                : ''
+            }
             <Checkbox checked={insertResultChecked} onChange={() => setInsertResultChecked(!insertResultChecked)}>
               将返回参数直接插入模板
             </Checkbox>
