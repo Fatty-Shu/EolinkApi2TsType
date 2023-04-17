@@ -31,7 +31,7 @@ const getInsertParamsString = (params: ParamItem[], indent: string = ''): string
       if (InterfaceType[param.paramType] && param.childList?.length) {
         return str += lineParamString({
           param,
-          subType: getInsertParamsString(param.childList, indent + `  `) + (param.paramType === '12' ? '[]' : '') + ';',
+          subType: getInsertParamsString(param.childList, indent + `  `) + (param.paramType === '12' ? '[]' : ''),
           indent: indent + `  `
         });
       }
